@@ -209,3 +209,26 @@ section p {
     grid-template-columns: 1fr;
   }
 }
+
+.filter-container {
+  margin-bottom: 1.5rem;
+}
+
+.filter-container label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.filter-container select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
