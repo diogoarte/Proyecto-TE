@@ -13,3 +13,12 @@ Este es un proyecto de una tienda virtual construida con **React**, **Vite**, **
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/tuusuario/tienda-virtual.git
+
+2. Instalar las dependencias:
+   ```bash
+   npm install
+
+3. Iniciar el proyecto
+   ```bash
+   npm run
+   
