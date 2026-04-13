@@ -1,0 +1,296 @@
+.confirmation-page {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.confirmation-header {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+}
+
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
+  animation: success-bounce 0.6s ease-out;
+}
+
+@keyframes success-bounce {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.confirmation-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-message {
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+
+.confirmation-error {
+  background-color: white;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #d32f2f;
+}
+
+.confirmation-container {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+}
+
+.order-info {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-info h2 {
+  font-size: 1.3rem;
+  margin: 1.5rem 0 1rem 0;
+  color: #333;
+}
+
+.order-info h2:first-child {
+  margin-top: 0;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-section:last-of-type {
+  border-bottom: none;
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1rem;
+}
+
+.info-row .label {
+  font-weight: 600;
+  color: #666;
+}
+
+.info-row .value {
+  color: #333;
+}
+
+.info-row .value.highlight {
+  color: #667eea;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.info-row .value.status-completed {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product-item {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 80px 1fr auto 100px;
+  gap: 1rem;
+  align-items: center;
+}
+
+.product-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.product-details h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.product-details .category {
+  margin: 0.3rem 0 0 0;
+  font-size: 0.8rem;
+  color: #667eea;
+  text-transform: capitalize;
+}
+
+.product-quantity {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.product-price {
+  font-weight: bold;
+  color: #764ba2;
+  text-align: right;
+}
+
+.cost-summary {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.cost-summary h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.cost-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.cost-row.discount {
+  color: #4caf50;
+}
+
+.cost-row.total {
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid #667eea;
+  color: #764ba2;
+}
+
+.next-steps,
+.help-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.next-steps h3,
+.help-section h3 {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.next-steps ol {
+  padding-left: 1.25rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.next-steps li {
+  margin-bottom: 0.5rem;
+}
+
+.help-section p {
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+}
+
+.contact-info {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.action-buttons a {
+  padding: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .confirmation-container {
+    grid-template-columns: 1fr;
+  }
+
+  .cost-summary {
+    position: static;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item {
+    grid-template-columns: 60px 1fr auto;
+  }
+
+  .product-item img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .confirmation-header {
+    padding: 1.5rem;
+  }
+
+  .confirmation-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .success-icon {
+    font-size: 3rem;
+  }
+
+  .order-info,
+  .cost-summary {
+    padding: 1.5rem;
+  }
+
+  .product-item {
+    grid-template-columns: 1fr;
+  }
+
+  .product-item img {
+    width: 100%;
+    height: auto;
+  }
+}
