@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env.example
+ARCHITECTURE.md
+CHECKLIST.md
+DEVELOPMENT.md
+MANIFEST.md
+QUICK_START.md
+RESUMEN_EJECUTIVO.md
+RESUMEN_FINAL.md
+TESTING.md

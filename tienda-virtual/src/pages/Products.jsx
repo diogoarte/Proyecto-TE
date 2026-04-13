@@ -1,46 +1,128 @@
-import { useState } from 'react'
-import products from '../data/products'
-import ProductCard from '../components/ProductCard.jsx'
+import { useState, useMemo } from 'react'
+import { useProducts, useCategories } from '../hooks/useProducts'
+import ProductCard from '../components/ProductCard'
+import { searchProducts, sortProducts } from '../utils/helpers'
+import '../styles/products.css'
 
 function Products() {
-  const [categoryFilter, setCategoryFilter] = useState('') // Estado para el filtro
+  const { products, loading, error } = useProducts()
+  const { categories } = useCategories()
 
-  // Filtramos los productos segun la categoria seleccionanda
-  const filteredProducts = categoryFilter
-	? products.filter((product) => product.category === categoryFilter)
-	: products
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [sortBy, setSortBy] = useState('')
 
-  //OBtener todas las categorias unicas para el filtro
-  const categories = [...new Set(products.map((product) => product.category))]
+  // Aplicar filtros y ordenamiento
+  const filteredProducts = useMemo(() => {
+    let result = products
+
+    // Filtrar por categoría
+    if (selectedCategory) {
+      result = result.filter((p) => p.category === selectedCategory)
+    }
+
+    // Buscar por nombre o descripción
+    if (searchQuery) {
+      result = searchProducts(result, searchQuery)
+    }
+
+    // Ordenar
+    if (sortBy) {
+      result = sortProducts(result, sortBy)
+    }
+
+    return result
+  }, [products, selectedCategory, searchQuery, sortBy])
+
+  if (loading) {
+    return <section className="loading">⏳ Cargando productos...</section>
+  }
+
+  if (error) {
+    return <section className="error">❌ Error al cargar los productos: {error}</section>
+  }
 
   return (
-    <section>
-      <h1>Catálogo de productos</h1>
-      <p>Explora nuestros productos disponibles.</p>
+    <section className="products-page">
+      <h1 className="page-title">📦 Catálogo de Productos</h1>
 
-      {/* Filtro de categoira */}
-      <div calssNamme="filter-container">
-	  <label htmlFor="category-filter">Filtrar por categoria:</label>
-	  <select
-	  	id="category-filter"
-	  	value={categoryFilter}
-	  	onChange={(e) => setCategoryFilter(e.target.value)}
-	  >
-	  	<option value="">Todos</option>
-	  	{categories.map((category) => (
-			<option key={category} value={category}>
-				{category}
-			</option>
-		))}
-	  </select>
+      <div className="filters-container">
+        {/* Búsqueda */}
+        <div className="filter-group">
+          <label htmlFor="search">🔍 Buscar</label>
+          <input
+            id="search"
+            type="text"
+            placeholder="Busca por nombre..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+        </div>
+
+        {/* Filtro de categoría */}
+        <div className="filter-group">
+          <label htmlFor="category">📂 Categoría</label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Ordenamiento */}
+        <div className="filter-group">
+          <label htmlFor="sort">↕️ Ordenar</label>
+          <select
+            id="sort"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Sin ordenar</option>
+            <option value="price-asc">Precio (menor a mayor)</option>
+            <option value="price-desc">Precio (mayor a menor)</option>
+            <option value="name-asc">Nombre (A-Z)</option>
+            <option value="name-desc">Nombre (Z-A)</option>
+          </select>
+        </div>
+
+        {/* Contador de resultados */}
+        <div className="results-count">
+          Mostrando {filteredProducts.length} de {products.length} productos
+        </div>
       </div>
 
-
-      <div className="products-grid">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      {/* Productos */}
+      {filteredProducts.length === 0 ? (
+        <div className="no-products">
+          <p>😔 No encontramos productos que coincidan con tu búsqueda</p>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              setSearchQuery('')
+              setSelectedCategory('')
+              setSortBy('')
+            }}
+          >
+            Limpiar filtros
+          </button>
+        </div>
+      ) : (
+        <div className="products-grid">
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </section>
   )
 }
