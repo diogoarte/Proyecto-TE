@@ -1,10 +1,10 @@
+//tienda-virtual/src/pages/checkout/Checkout.jsx
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useCartStore } from "../../store/cartStore";
 import { storageService } from '../../services/storageService'
 import { generateOrderId, formatPrice, validateEmail, validatePhone } from '../../utils/helpers'
-import '../../styles/confirmation.css'
-
+import '../../styles/checkout.css'
 function Checkout() {
   const navigate = useNavigate()
   const cart = useCartStore((state) => state.cart)

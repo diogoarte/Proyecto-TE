@@ -1,3 +1,4 @@
+//tienda-virtual/src/router/AppRouter.jsx
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Home from '../pages/Home'
@@ -6,10 +7,15 @@ import ProductDetail from '../pages/ProductDetail'
 import Cart from '../pages/Cart'
 import Checkout from '../pages/checkout/Checkout'
 import Confirmation from '../pages/checkout/Confirmation'
+import Login from '../pages/Login'
+import Register from '../pages/Register'
+import Profile from '../pages/Profile'
 
 function AppRouter() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="products" element={<Products />} />
@@ -17,6 +23,7 @@ function AppRouter() {
         <Route path="cart" element={<Cart />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="confirmation/:orderId" element={<Confirmation />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>

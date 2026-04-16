@@ -1,3 +1,4 @@
+//tienda-virtual/src/pages/checkout/Confirmacion.jsx
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { storageService } from '../../services/storageService'
