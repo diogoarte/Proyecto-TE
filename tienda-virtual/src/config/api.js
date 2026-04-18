@@ -5,5 +5,7 @@ export const API_ENDPOINTS = {
   PRODUCT_DETAIL: (id) => `/products/${id}`,
   CATEGORIES: '/products/categories',
   PRODUCTS_BY_CATEGORY: (category) => `/products/category/${category}`,
-  AUTH_LOGIN: '/auth/login'
+  AUTH_LOGIN: '/auth/login',
+  USERS: '/users',
+  REGISTER: '/users',
 }

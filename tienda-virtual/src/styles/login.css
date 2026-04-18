@@ -104,3 +104,17 @@
 .login-footer a:hover {
   text-decoration: underline;
 }
+.login-hint {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: #aaa;
+  background: #f9f9f9;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+}
+
+.login-hint strong {
+  color: #667eea;
+  font-family: monospace;
+}

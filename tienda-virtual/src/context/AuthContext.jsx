@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState } from 'react'
+import { apiService } from '../services/apiService'
 
 export const AuthContext = createContext()
 
@@ -8,22 +9,52 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : null
   })
 
-  const login = (email, password) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
-    const found = users.find(u => u.email === email && u.password === password)
-    if (!found) return { ok: false, error: 'Correo o contraseña incorrectos' }
-    const { password: _, ...safeUser } = found
-    setUser(safeUser)
-    localStorage.setItem('user', JSON.stringify(safeUser))
-    return { ok: true }
+  const login = async (username, password) => {
+    // 1. Primero busca en usuarios registrados localmente
+    const localUsers = JSON.parse(localStorage.getItem('users') || '[]')
+    const localFound = localUsers.find(u => u.username === username && u.password === password)
+
+    if (localFound) {
+      const { password: _, ...safeUser } = localFound
+      setUser(safeUser)
+      localStorage.setItem('user', JSON.stringify(safeUser))
+      return { ok: true }
+    }
+
+    // 2. Si no está local, intenta con fakestoreapi
+    try {
+      const data = await apiService.login(username, password)
+      if (!data.token) return { ok: false, error: 'Usuario o contraseña incorrectos' }
+
+      const users = await apiService.fetchUsers()
+      const found = users.find(u => u.username === username)
+
+      const safeUser = found
+        ? { id: found.id, username: found.username, email: found.email, token: data.token, name: found.name }
+        : { username, token: data.token }
+
+      setUser(safeUser)
+      localStorage.setItem('user', JSON.stringify(safeUser))
+      return { ok: true }
+    } catch {
+      return { ok: false, error: 'Usuario o contraseña incorrectos' }
+    }
   }
 
   const register = (username, email, password) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]')
-    if (users.find(u => u.email === email)) return { ok: false, error: 'El correo ya está registrado' }
+    const localUsers = JSON.parse(localStorage.getItem('users') || '[]')
+
+    if (localUsers.find(u => u.username === username)) {
+      return { ok: false, error: 'Ese nombre de usuario ya existe' }
+    }
+    if (localUsers.find(u => u.email === email)) {
+      return { ok: false, error: 'Ese correo ya está registrado' }
+    }
+
     const newUser = { id: Date.now(), username, email, password }
-    users.push(newUser)
-    localStorage.setItem('users', JSON.stringify(users))
+    localUsers.push(newUser)
+    localStorage.setItem('users', JSON.stringify(localUsers))
+
     const { password: _, ...safeUser } = newUser
     setUser(safeUser)
     localStorage.setItem('user', JSON.stringify(safeUser))
